@@ -32,7 +32,7 @@ if __name__ == '__main__':
      graph.walls = set(WALLS)
 
      # Set the weighs of some points in the maze
-     graph.weights = {location: random.randint(1,10) for location in [(3, 4), (3, 5), (4, 1), (4, 2),
+     graph.weights = {location: random.randint(1,4) for location in [(3, 4), (3, 5), (4, 1), (4, 2),
                                             (4, 3), (4, 4), (4, 5), (4, 6),
                                             (4, 7), (4, 8), (5, 1), (5, 2),
                                             (5, 3), (5, 4), (5, 5), (5, 6),
@@ -42,10 +42,11 @@ if __name__ == '__main__':
 
      # Call the A* algorithm and get the frontier
      frontier = a_star.a_star_search(graph = graph, start=(1, 4), end=(7, 8), heuristic=manhattan_distance)
+     solution = list(frontier.backtrack((7,8)))
 
      # Print the results
 
-     graph.draw(width=5, point_to = {k:v.came_from for k,v in frontier.visited.items()}, start=(1, 4), goal=(7, 8))
+     graph.draw(width=5, point_to = {k:v.came_from for k,v in frontier.visited.items()}, start=(1, 4), goal=(7, 8), path=solution)
 
      print("[costs]")
 

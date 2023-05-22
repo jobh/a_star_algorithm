@@ -63,13 +63,13 @@ class SquareGrid():
             if y2 == y1 - 1:
                 character = "\u2191"
         if 'start' in style and point == style['start']:
-            character = "S"
+            character = "S\u00ab"
         if 'goal' in style and point == style['goal']:
-            character = "E"
+            character = "%s\u00ab" % character
         if 'path' in style and point in style['path']:
-            character = "@"
+            character = "@%s" % character
         if point in self.walls:
-            character = "#" * width
+            character = "#" * (width-1)
         return character
 
     def draw(self, width=2, **style):
