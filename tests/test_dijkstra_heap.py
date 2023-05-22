@@ -66,7 +66,7 @@ class DijkstraHeapTests(unittest.TestCase):
         came_from_dic = { x:x+1 for x in range(10) }
 
 
-        self.assertTrue( came_from_dic == frontier.visited )
+        self.assertTrue( came_from_dic == {k:v.came_from for k,v in frontier.visited.items()} )
 
     def test_came_from_unique(self):
 
@@ -86,7 +86,7 @@ class DijkstraHeapTests(unittest.TestCase):
         came_from_dic = { x:x+1 for x in range(5) }
 
 
-        self.assertTrue( came_from_dic == frontier.visited )
+        self.assertTrue( came_from_dic == {k:v.came_from for k,v in frontier.visited.items()} )
 
 if __name__ == "__main__":
     unittest.main()

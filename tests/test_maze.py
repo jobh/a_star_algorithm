@@ -2,16 +2,8 @@
 
 import unittest
 import a_star
-from a_star.tools import GridWithWeights
+from a_star.tools import GridWithWeights, manhattan_distance
 
-
-def backtrack( came_from_dict , start, end):
-
-    current = end
-    yield current
-    while current != start:
-        current = came_from_dict[current]
-        yield current
 
 class MazeTests(unittest.TestCase):
 
@@ -22,12 +14,13 @@ class MazeTests(unittest.TestCase):
         weights = {(1,0):20,(3,0) : 2}
         maze.weights = weights
         my_solution = [(3,0),(3,1),(3,2),(3,3),(2,3),(1,3),(0,3),(0,2)]
+
         end = (3,0)
         start = (0,2)
 
         # Call the A* algorithm and get the frontier
-        frontier = a_star.a_star_search(graph = maze, start=start, end=end)
-        solution = list(backtrack(frontier.visited,start,end))
+        frontier = a_star.a_star_search(graph = maze, start=start, end=end, heuristic=manhattan_distance)
+        solution = list(frontier.backtrack(end))
         self.assertTrue( solution == my_solution  )
 
 
@@ -45,9 +38,9 @@ class MazeTests(unittest.TestCase):
                        (2, 0), (1, 0), (0, 0), (0, 1),
                        (0, 2), (0, 3)]
         # Call the A* algorithm and get the frontier
-        frontier = a_star.a_star_search(graph = maze, start=start, end=end)
+        frontier = a_star.a_star_search(graph = maze, start=start, end=end, heuristic=manhattan_distance)
 
-        solution = list(backtrack(frontier.visited,start,end))
+        solution = list(frontier.backtrack(end))
 
         self.assertTrue( solution == my_solution  )
 

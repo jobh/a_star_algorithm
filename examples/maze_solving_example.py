@@ -13,7 +13,7 @@ def from_id_width(point, width):
 if __name__ == '__main__':
 
      import a_star
-     from a_star.tools import GridWithWeights
+     from a_star.tools import GridWithWeights, manhattan_distance
      import random
 
      # Construct a cool wall collection from this aparently arbitraty points.
@@ -41,17 +41,16 @@ if __name__ == '__main__':
                                             (7, 3), (7, 4), (7, 5)]}
 
      # Call the A* algorithm and get the frontier
-     frontier = a_star.a_star_search(graph = graph, start=(1, 4), end=(7, 8))
+     frontier = a_star.a_star_search(graph = graph, start=(1, 4), end=(7, 8), heuristic=manhattan_distance)
 
      # Print the results
 
-     graph.draw(width=5, point_to = frontier.visited, start=(1, 4), goal=(7, 8))
-
-     print("[costs]")
-
-     costs_so_far = { k: v - a_star.heuristic(k, (7, 8)) for k,v in frontier.costs.items() }
-     graph.draw(width=5, number = costs_so_far, start=(1, 4), goal=(7, 8))
+     graph.draw(width=5, point_to = {k:v.came_from for k,v in frontier.visited.items()}, start=(1, 4), goal=(7, 8))
 
      print("[total cost estimates]")
+     costs = {k:v.cost_estimate for k,v in frontier.visited.items()}
+     graph.draw(width=5, number = costs, start=(1, 4), goal=(7, 8))
 
-     graph.draw(width=5, number = frontier.costs, start=(1, 4), goal=(7, 8)) #  cost estimates
+     print("[costs]")
+     costs_so_far = { k: v - manhattan_distance(k, (7, 8)) for k,v in costs.items() }
+     graph.draw(width=5, number = costs_so_far, start=(1, 4), goal=(7, 8))

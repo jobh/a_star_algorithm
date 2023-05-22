@@ -100,3 +100,15 @@ class GridWithWeights(SquareGrid):
         return self.weights.get(to_node, 1)
 
 
+def manhattan_distance(a, b):
+    """
+    The heuristic function of the A* algorithm. In this case the Manhattan distance,
+    to be used in the case where vertices are 2D coordinate tuples (a grid).
+
+    :param a: Tuple of two ints ( Point A)
+    :param b: Tuple of two ints ( Point B)
+    :returns: integer ( Distance between A nd B )
+    """
+    (x1, y1) = a
+    (x2, y2) = b
+    return abs(x1 - x2) + abs(y1 - y2)
