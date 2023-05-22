@@ -47,10 +47,10 @@ if __name__ == '__main__':
 
      graph.draw(width=5, point_to = {k:v.came_from for k,v in frontier.visited.items()}, start=(1, 4), goal=(7, 8))
 
-     print("[total cost estimates]")
-     costs = {k:v.cost_estimate for k,v in frontier.visited.items()}
-     graph.draw(width=5, number = costs, start=(1, 4), goal=(7, 8))
-
      print("[costs]")
-     costs_so_far = { k: v - manhattan_distance(k, (7, 8)) for k,v in costs.items() }
-     graph.draw(width=5, number = costs_so_far, start=(1, 4), goal=(7, 8))
+
+     graph.draw(width=5, number = {k:v.cost_so_far for k,v in frontier.visited.items()}, start=(1, 4), goal=(7, 8))
+
+     print("[total cost estimates]")
+
+     graph.draw(width=5, number = {k:v.cost_estimate for k,v in frontier.visited.items()}, start=(1, 4), goal=(7, 8))

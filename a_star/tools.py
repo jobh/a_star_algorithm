@@ -23,6 +23,9 @@ class SquareGrid():
         """
         return point not in self.walls
 
+    def cost(self, from_node, to_node):
+        return 1
+
     def neighbors(self, point):
         """ Yields the valid neighbours of a given point.
 
@@ -34,7 +37,7 @@ class SquareGrid():
         candidates = [(x + 1, y), (x, y - 1), (x - 1, y), (x, y + 1)]
         candidates = filter(self.is_inside, candidates)
         candidates = filter(self.is_wall, candidates)
-        yield from candidates
+        yield from ((pt, self.cost(point, pt)) for pt in candidates)
 
     def _draw_tile(self, point, style, width):
         """ Returns a symbol for the current point given the style dictionary and the drawing width.

@@ -9,7 +9,7 @@ class DijkstraHeapTests(unittest.TestCase):
 
     def test_sorted_unique(self):
 
-        test_data = [a_star.Node(x,x,None) for x in (5,7,3,2,5,3,5,7,2,1,3,1)]
+        test_data = [a_star.Node(x,x,x,None) for x in (5,7,3,2,5,3,5,7,2,1,3,1)]
         sorted_unique = sorted(set(test_data))
 
         # Prepare and insert elements in DijkstraHeap
@@ -30,7 +30,7 @@ class DijkstraHeapTests(unittest.TestCase):
 
     def test_delete_repeated(self):
 
-        test_data = [a_star.Node(x,x,None) for x in (1,1,1,1,1,1,1,1,1)]
+        test_data = [a_star.Node(x,x,x,None) for x in (1,1,1,1,1,1,1,1,1)]
 
         # Prepare and insert elements in DijkstraHeap
 
@@ -45,12 +45,12 @@ class DijkstraHeapTests(unittest.TestCase):
             elem = frontier.pop()
             if elem:
                 result.append(elem)
-        self.assertTrue( result == [a_star.Node(1,1,None)]  )
+        self.assertTrue( result == [a_star.Node(1,1,1,None)]  )
 
 
     def test_came_from(self):
 
-        test_data = [a_star.Node(x,x,x+1) for x in range(10)]
+        test_data = [a_star.Node(x,x,x,x+1) for x in range(10)]
 
         # Prepare and insert elements in DijkstraHeap
 
@@ -70,7 +70,7 @@ class DijkstraHeapTests(unittest.TestCase):
 
     def test_came_from_unique(self):
 
-        test_data = [a_star.Node(x,x,x+1) for x in [0,1,2,3,2,4,1]]
+        test_data = [a_star.Node(x,x,x,x+1) for x in [0,1,2,3,2,4,1]]
 
         # Prepare and insert elements in DijkstraHeap
 
