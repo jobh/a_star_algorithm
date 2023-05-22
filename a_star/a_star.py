@@ -56,13 +56,13 @@ class DijkstraHeap(list):
 
 Node = collections.namedtuple("Node", ["cost_estimate", "cost_so_far", "vertex", "came_from"])
 
-def a_star_search(graph, start, end, heuristic):
+def a_star_search(neighbors, start, end, heuristic):
     """
     Calculates the shortest path from start to end.
 
-    :param graph: A graph object. The graph object can be anything that implements the following method for a vertex of any comparable and hashable type V:
+    :param neighbors: The graph, represented by a function that takes a vertex of a comparable and hashable type V and returns its neighbors.
 
-        graph.neighbors( from_vertex:V ) : Iterable( (to_vertex:V,edge_cost:float), (to_vertex:V,edge_cost:float), ...)
+        neighbors( from_vertex:V ) : Iterable( (to_vertex:V,edge_cost:float), (to_vertex:V,edge_cost:float), ...)
 
     :param start: The starting vertex, as type V.
     :param end: The ending vertex, as type V.
@@ -83,11 +83,14 @@ def a_star_search(graph, start, end, heuristic):
         if current_node.vertex == end:
             return frontier
 
-        for neighbor, edge_cost in graph.neighbors( current_node.vertex ):
+        for neighbor, edge_cost in neighbors( current_node.vertex ):
 
-            new_cost = current_node.cost_so_far + edge_cost
+            cost_at_neighbor = current_node.cost_so_far + edge_cost
 
-            new_node = Node(new_cost + heuristic(neighbor, end), new_cost, neighbor, current_node.vertex)
+            new_node = Node(cost_at_neighbor + heuristic(neighbor, end),
+                            cost_at_neighbor,
+                            neighbor,
+                            current_node.vertex)
 
             frontier.insert(new_node)
 
