@@ -19,7 +19,7 @@ class DijkstraHeap(list):
 
     def insert(self, node):
         """
-        Insert a node into the Dijkstra Heap.
+        Insert a node into the Dijkstra Heap if the vertex is not already visited.
 
         :param node: A Node object.
         :return: None
@@ -30,18 +30,15 @@ class DijkstraHeap(list):
 
     def pop(self):
         """
-        Pop a node from the Dijkstra Heap, adding it to the visited dict.
+        Pop an unvisited node from the Dijkstra Heap, adding it to the visited dict.
 
         :return: A Node object
         """
 
-        while self and self[0].vertex in self.visited:
-            heapq.heappop(self)
-
-        if self:
+        while self:
             next_elem = heapq.heappop(self)
-            self.visited[next_elem.vertex] = next_elem
-            return next_elem
+            if self.visited.setdefault(next_elem.vertex, next_elem) is next_elem:
+                return next_elem
 
     def backtrack(self, current):
         """
@@ -60,14 +57,17 @@ def a_star_search(neighbors, start, end, heuristic):
     """
     Calculates the shortest path from start to end.
 
-    :param neighbors: The graph, represented by a function that takes a vertex of a comparable and hashable type V and returns its neighbors.
+    The graph is defined implicitly by a pair of functions working on vertices. The vertex representation
+    may be any comparable and hashable type such as int, tuple, etc.
+
+    :param neighbors: A function returning the (possibly directed) neighbors of a vertex, along with their costs.
 
         neighbors( from_vertex:V ) : Iterable( (to_vertex:V,edge_cost:float), (to_vertex:V,edge_cost:float), ...)
 
     :param start: The starting vertex, as type V.
     :param end: The ending vertex, as type V.
     :param heuristic: Heuristic lower-bound cost function taking arguments ( from_vertex:V, end:V ) and returning float.
-    :returns: A DijkstraHeap object.
+    :returns: A DijkstraHeap object. The shortest path is: `reversed(list(d_heap.backtrack(end)))`.
 
     """
 

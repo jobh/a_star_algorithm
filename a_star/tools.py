@@ -63,7 +63,7 @@ class SquareGrid():
             if y2 == y1 - 1:
                 character = "\u2191"
         if 'start' in style and point == style['start']:
-            character = "S\u00ab"
+            character = "%s\u00bb" % character
         if 'goal' in style and point == style['goal']:
             character = "%s\u00ab" % character
         if 'path' in style and point in style['path']:
